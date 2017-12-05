@@ -173,29 +173,43 @@ def get_model():
     model = Sequential()
     model.add(Activation(activation=center_normalize, input_shape=(30, 64, 64)))
 
+    #layer 1
     model.add(Convolution2D(64, 3, 3, border_mode='same'))
-    model.add(Activation('sigmoid'))
+    model.add(Activation('relu'))
+
+    #layer 2
     model.add(Convolution2D(64, 3, 3, border_mode='valid'))
-    model.add(Activation('sigmoid'))
+    model.add(Activation('relu'))
+    # pooling & dropout 1
     model.add(ZeroPadding2D(padding=(1, 1)))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
     model.add(Dropout(0.25))
 
+    # layer 3
     model.add(Convolution2D(96, 3, 3, border_mode='same'))
-    model.add(Activation('sigmoid'))
+    model.add(Activation('relu'))
+
+    #layer 4
     model.add(Convolution2D(96, 3, 3, border_mode='valid'))
-    model.add(Activation('sigmoid'))
+    model.add(Activation('relu'))
+    #pooling & dropout 2
     model.add(ZeroPadding2D(padding=(1, 1)))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
     model.add(Dropout(0.25))
 
+    #layer 5
     model.add(Convolution2D(128, 2, 2, border_mode='same'))
-    model.add(Activation('sigmoid'))
+    model.add(Activation('relu'))
+
+    #layer 6
     model.add(Convolution2D(128, 2, 2, border_mode='same'))
-    model.add(Activation('sigmoid'))
+    model.add(Activation('relu'))
+
+    #pooling & dropout 3
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
     model.add(Dropout(0.25))
 
+    # put in a neural network with 1024 hidden units as specified in Keras documentation.
     model.add(Flatten())
     model.add(Dense(1024, W_regularizer=l2(1e-3)))
     model.add(Activation('relu'))
