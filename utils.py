@@ -30,6 +30,9 @@ def real_to_cdf(y, sigma=1e-10):
         cdf[i] = norm.cdf(np.linspace(0, 599, 600), y[i], sigma)
     return cdf
 
+def calculate_volume(pixel_spacing, pixels, slice_thickness):
+    return ((pixel_spacing ** 2)*slice_thickness))
+
 
 def preprocess(X):
     """
